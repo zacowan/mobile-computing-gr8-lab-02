@@ -22,7 +22,7 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class API_Search extends Activity {
 
-    private final String API_URL = "http://127.0.0.1:8080/api/s/";
+    private final String API_URL = "http://10.0.2.2:8080/api/s/"; //"http://127.0.0.1:8080/api/s/";
     private final String LOG_TAG = "MOBILE COMPUTING";
 
     private RecyclerView m_recView;
@@ -73,6 +73,7 @@ public class API_Search extends Activity {
         // Make a request
         final EditText keywordEditText = (EditText) findViewById(R.id.keyWordEditText);
         final Context self = this;
+        System.out.println(API_URL + keywordEditText.getText());
         StringRequest res = new StringRequest(Request.Method.GET, API_URL + keywordEditText.getText(),
             new Response.Listener<String>() {
                 private ImageLoader imgLoad = VolleySingleton.getInstance(self).getImageLoader();
