@@ -11,6 +11,7 @@ import com.android.volley.RequestQueue;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,9 +50,11 @@ public class API_Search extends Activity {
         ((DatumAdapter) m_adapter).setOnItemClickListener(new DatumAdapter.DatumClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                String msg = "Item with ID: " + ((DatumAdapter) m_adapter).getItem(position).id();
-                Toast toast = Toast.makeText(self, msg, Toast.LENGTH_SHORT);
-                toast.show();
+                int item_id = ((DatumAdapter) m_adapter).getItem(position).id();
+//                String msg = "Item with ID: " + item_id;
+//                Toast toast = Toast.makeText(self, msg, Toast.LENGTH_SHORT);
+//                toast.show();
+                show_result(item_id);
             }
         });
 
@@ -113,5 +116,11 @@ public class API_Search extends Activity {
 
         // Start the request
         requestQ.add(res);
+    }
+
+    private void show_result(int item_id) {
+        Intent displayIntent = new Intent(this, ResultDisplayActivity.class);
+        displayIntent.putExtra("item_id", item_id);
+        startActivity(displayIntent);
     }
 }
