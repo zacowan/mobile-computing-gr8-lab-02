@@ -91,7 +91,7 @@ public class API_Search extends Activity {
                             // Get the properties
                             obj = resultJsonArray.getJSONObject(i);
                             Datum datum = new Datum(obj.getInt("id"), obj.getString("title"),
-                                    obj.getString("date"), obj.getString("text"), obj.getString("image"));
+                                    obj.getString("date"), obj.getString("text"), obj.getString("image").replace("http", "https"));
 
                             // Add the item to the view
                             ((DatumAdapter) m_adapter).addItem(datum, m_adapter.getItemCount());
