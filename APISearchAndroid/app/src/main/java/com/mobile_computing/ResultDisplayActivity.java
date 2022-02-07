@@ -27,6 +27,7 @@ public class ResultDisplayActivity extends AppCompatActivity {
 
     private void display_result(int item_id){
         final Context self = this;
+        // Print to console on Error
         StringRequest res = new StringRequest(Request.Method.GET, API_URL_GET_ITEM + item_id,
                 new Response.Listener<String>() {
                     //private ImageLoader imgLoad = VolleySingleton.getInstance(self).getImageLoader();
@@ -39,20 +40,13 @@ public class ResultDisplayActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(response);
                             Datum datum = new Datum(obj.getInt("id"), obj.getString("title"),
                                     obj.getString("date"), obj.getString("text"), obj.getString("image").replace("http", "https"));
-
-
-
+                            // Display the result to the screen
+                            
                         } catch (Exception e) {
                             // Print to console on error
                             e.printStackTrace();
                         }
                     }
-                }, new Response.ErrorListener() {
-            // Print to console on Error
-            @Override
-            public void onErrorResponse(VolleyError err) {
-                err.printStackTrace();
-            }
-        }
+                }, Throwable::printStackTrace);
     }
 }

@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">API Search</string>
     <string name="search">Search</string>
+    <string name="result_display_cover_image_content_description">Book Cover Image</string>
 </resources>
