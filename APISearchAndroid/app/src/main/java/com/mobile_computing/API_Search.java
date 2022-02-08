@@ -67,6 +67,7 @@ public class API_Search extends Activity {
             }
         });
 
+
         // Setup the request queue for network requests (using Volley)
         requestQ = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
 

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -44,12 +45,15 @@ public class DatumAdapter extends RecyclerView.Adapter<DatumAdapter.DataObjectHo
         TextView title;
         TextView date;
         NetworkImageView img;
+        ImageButton starButton;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
             date  = (TextView) itemView.findViewById(R.id.date);
             img   = (NetworkImageView) itemView.findViewById(R.id.img);
+            starButton = (ImageButton) itemView.findViewById(R.id.starButton);
+
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -78,6 +82,13 @@ public class DatumAdapter extends RecyclerView.Adapter<DatumAdapter.DataObjectHo
         holder.title.setText(m_data.get(position).title());
         holder.date.setText(m_data.get(position).date());
         holder.img.setImageUrl(m_data.get(position).imageUrl(), imgLoad);
+        holder.starButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int item_id = m_data.get(holder.getAdapterPosition()).id();
+                System.out.println("Button was pressed --> " + item_id);
+            }
+        });
+
     }
 
     public void addItem(Datum datum, int index) {
