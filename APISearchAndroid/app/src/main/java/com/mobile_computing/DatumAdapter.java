@@ -1,6 +1,7 @@
 package com.mobile_computing;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,7 +54,6 @@ public class DatumAdapter extends RecyclerView.Adapter<DatumAdapter.DataObjectHo
             date  = (TextView) itemView.findViewById(R.id.date);
             img   = (NetworkImageView) itemView.findViewById(R.id.img);
             starButton = (ImageButton) itemView.findViewById(R.id.starButton);
-            starButton.setImageResource(android.R.drawable.btn_star_big_off);
 
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
@@ -83,11 +83,30 @@ public class DatumAdapter extends RecyclerView.Adapter<DatumAdapter.DataObjectHo
         holder.title.setText(m_data.get(position).title());
         holder.date.setText(m_data.get(position).date());
         holder.img.setImageUrl(m_data.get(position).imageUrl(), imgLoad);
+
+        // Set initial button image
+        int item_id = m_data.get(holder.getAdapterPosition()).id();
+        // Get shared preferences for favorites
+        SharedPreferences sharedPreferences = m_context.getSharedPreferences(String.valueOf(R.string.favorites_preferences_file), Context.MODE_PRIVATE);
+        // Read current item favorite
+        boolean fav = sharedPreferences.getBoolean(String.valueOf(item_id), false);
+        // Update star button
+        updateStarButtonImage(holder, fav);
+
+        // onClick
         holder.starButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int item_id = m_data.get(holder.getAdapterPosition()).id();
                 System.out.println("Button was pressed --> " + item_id);
-
+                // Get shared preferences for favorites
+                SharedPreferences sharedPreferences = m_context.getSharedPreferences(String.valueOf(R.string.favorites_preferences_file), Context.MODE_PRIVATE);
+                // Read current item favorite
+                boolean fav = sharedPreferences.getBoolean(String.valueOf(item_id), false);
+                // Set to opposite
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(String.valueOf(item_id), !fav);
+                editor.apply();
+                // Update star button
+                updateStarButtonImage(holder, !fav);
             }
         });
 
@@ -123,5 +142,13 @@ public class DatumAdapter extends RecyclerView.Adapter<DatumAdapter.DataObjectHo
 
     public interface DatumClickListener {
         public void onItemClick(int position, View v);
+    }
+
+    private void updateStarButtonImage(DataObjectHolder holder, boolean fav) {
+        if (fav) {
+            holder.starButton.setImageResource(android.R.drawable.btn_star_big_on);
+        } else {
+            holder.starButton.setImageResource(android.R.drawable.btn_star_big_off);
+        }
     }
 }
