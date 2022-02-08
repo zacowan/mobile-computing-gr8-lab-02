@@ -53,6 +53,7 @@ public class DatumAdapter extends RecyclerView.Adapter<DatumAdapter.DataObjectHo
             date  = (TextView) itemView.findViewById(R.id.date);
             img   = (NetworkImageView) itemView.findViewById(R.id.img);
             starButton = (ImageButton) itemView.findViewById(R.id.starButton);
+            starButton.setImageResource(android.R.drawable.btn_star_big_off);
 
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
@@ -86,6 +87,7 @@ public class DatumAdapter extends RecyclerView.Adapter<DatumAdapter.DataObjectHo
             public void onClick(View v) {
                 int item_id = m_data.get(holder.getAdapterPosition()).id();
                 System.out.println("Button was pressed --> " + item_id);
+
             }
         });
 
